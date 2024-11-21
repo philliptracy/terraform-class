@@ -60,18 +60,18 @@ module "alb" {
       protocol  = "HTTP"
 
       forward = {
-        target_group_key = aws_instance.blog.id
+        target_group_key = "my-tg-key"
       }
     }
   }
 
   target_groups = {
-    blog_target_instance = {
+    blog-target-instance = {
       name_prefix = "blog-"
       protocol    = "HTTP"
       port        = 80
       target_type = "instance"
-      target_id   = aws_instance.blog.id
+      target_id   = "my-tg-key"
     }
   }
 
