@@ -55,26 +55,19 @@ module "alb" {
   security_groups = module.blog_sg.security_group_id
 
   target_groups = {
-    {
-      blog_target_instance = {
-        name_prefix        = "blog-"
-        backend_protocol   = "HTTP"
-        backend_port       = 80
-        target_type        = "instance"
-        targets = {
-          my_target = {
-            target_id   = aws_instance.blog.id
-            port        = 80
-          }
-        }
-      }
+    blog_target_instance = {
+      name_prefix = "blog-"
+      protocol    = "HTTP"
+      port        = 80
+      target_type = "instance"
+      target_id   = aws_instance.blog.id
     }
   }
 
   listeners = {
     ex-https = {
-      port            = 80
-      protocol        = "HTTP"
+      port      = 80
+      protocol  = "HTTP"
 
       forward = {
         target_group_key = aws_instance.blog.id
@@ -83,9 +76,9 @@ module "alb" {
   }
 
   tags = {
-      Environment = "dev"
-    }
+    Environment = "dev"
   }
+}
 
 module "blog_sg" {
   source  = "terraform-aws-modules/security-group/aws"
